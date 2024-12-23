@@ -1,0 +1,1 @@
+Topics covered to understand basic image processing

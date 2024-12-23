@@ -1,0 +1,15 @@
+.. Basic Image Processing documentation master file, created by
+   sphinx-quickstart
+
+Basic Image Processing tutorials
+====================================
+
+.. toctree::
+   :maxdepth: 1
+   :caption: BASICS
+
+   auto_examples/01_image_basics
+   auto_examples/02_single_channel_image
+   auto_examples/03_brightness_contrast
+   auto_examples/04_thresholding
+   auto_examples/05_binary_image

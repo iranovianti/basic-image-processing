@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brightness and Contrast &mdash; Basic Image Processing 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Thresholding" href="04_thresholding.html" />
+    <link rel="prev" title="Single-Channel Image" href="02_single_channel_image.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Basic Image Processing
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">BASICS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_image_basics.html">What is an image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_single_channel_image.html">Single-Channel Image</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Brightness and Contrast</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#brightness">Brightness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contrast">Contrast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#practical-example">Practical Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#important">Important</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_thresholding.html">Thresholding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_binary_image.html">Binary Image</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Basic Image Processing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Brightness and Contrast</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/auto_examples/03_brightness_contrast.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-03-brightness-contrast-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="brightness-and-contrast">
+<span id="sphx-glr-auto-examples-03-brightness-contrast-py"></span><span id="id1"></span><h1>Brightness and Contrast<a class="headerlink" href="#brightness-and-contrast" title="Link to this heading"></a></h1>
+<p>Previously, in <a class="reference internal" href="02_single_channel_image.html#single-channel-image"><span class="std std-ref">Single-Channel Image</span></a>, we learned that we can assign different values to different colors using
+various color gradients.</p>
+<p>We can also change the <strong>range of values</strong> represented by a color gradient. In grayscale,
+adjusting this range affects the <strong>brightness and contrast</strong> of an image.</p>
+<p>To show how this works in practice, we’ll use <em>blobs.jpeg</em> as our example image.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">blobs</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;images/blobs.jpeg&quot;</span><span class="p">)</span>
+<span class="n">blobs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">blobs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Before we start, let’s create a simple function that displays an image
+and its histogram side by side. We can also specify a minimum and
+maximum value (<code class="docutils literal notranslate"><span class="pre">vmin</span></code> and <code class="docutils literal notranslate"><span class="pre">vmax</span></code>) for displaying the image.</p>
+<p>Since we use grayscale as the color gradient, pixels with <code class="docutils literal notranslate"><span class="pre">vmin</span></code>
+value will be displayed as black, and pixels with <code class="docutils literal notranslate"><span class="pre">vmax</span></code> value
+will be displayed as white.</p>
+<p>In addition, red and green lines will be drawn on the histogram to indicate
+<code class="docutils literal notranslate"><span class="pre">vmin</span></code> and <code class="docutils literal notranslate"><span class="pre">vmax</span></code>, respectively.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">show_image_histogram</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mf">3.8</span><span class="p">))</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Image&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">vmin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">vmin</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">vmax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">vmax</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">,</span> <span class="n">box_aspect</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histogram&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">vmax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;pixel value&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">plt.imshow</span></code>, automatically sets the darkest
+color (black) to the minimum pixel value and the brightest color (white)
+to the maximum pixel value in the image.</p>
+<p>Let’s look at the distribution of these pixel values using the <code class="docutils literal notranslate"><span class="pre">show_image_histogram</span></code>
+function:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">show_image_histogram</span><span class="p">(</span><span class="n">blobs</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Default display&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img src="../_images/sphx_glr_03_brightness_contrast_001.png" srcset="../_images/sphx_glr_03_brightness_contrast_001.png" alt="Default display, Image, Histogram" class = "sphx-glr-single-img"/><section id="brightness">
+<h2>Brightness<a class="headerlink" href="#brightness" title="Link to this heading"></a></h2>
+<p>In a grayscale image, brighter areas correspond to the upper end of
+the grayscale gradient. The more pixels mapped to this upper end, the brighter
+the image appears.</p>
+<p>One way to adjust brightness is to <strong>shift the display range (scale)</strong>.
+We can do this by changing <code class="docutils literal notranslate"><span class="pre">vmin</span></code> and <code class="docutils literal notranslate"><span class="pre">vmax</span></code>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">shift</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">show_image_histogram</span><span class="p">(</span><span class="n">blobs</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Shift the scale </span><span class="si">{</span><span class="n">shift</span><span class="si">}</span><span class="s2"> to the right&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">blobs</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">+</span><span class="n">shift</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">blobs</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">+</span><span class="n">shift</span><span class="p">)</span>
+<span class="n">show_image_histogram</span><span class="p">(</span><span class="n">blobs</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Shift the scale </span><span class="si">{</span><span class="n">shift</span><span class="si">}</span><span class="s2"> to the left&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">blobs</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">-</span><span class="n">shift</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">blobs</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">shift</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="sphx-glr-horizontal">
+<li><img src="../_images/sphx_glr_03_brightness_contrast_002.png" srcset="../_images/sphx_glr_03_brightness_contrast_002.png" alt="Shift the scale 100 to the right, Image, Histogram" class = "sphx-glr-multi-img"/></li>
+<li><img src="../_images/sphx_glr_03_brightness_contrast_003.png" srcset="../_images/sphx_glr_03_brightness_contrast_003.png" alt="Shift the scale 100 to the left, Image, Histogram" class = "sphx-glr-multi-img"/></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that if a pixel’s value falls outside the specified display range,
+it will appear as the color at the closest end of the gradient.</p>
+<p>Higher-than-maximum values are shown as white, and lower-than-minimum
+values are shown as black.</p>
+</div>
+<ul class="simple">
+<li><p><strong>Shifting the scale to the right</strong> places fewer pixels at the upper end, <strong>decreasing brightness</strong>.</p></li>
+<li><p><strong>Shifting the scale to the left</strong> places more pixels at the upper end, <strong>increasing brightness</strong>.</p></li>
+</ul>
+</section>
+<section id="contrast">
+<h2>Contrast<a class="headerlink" href="#contrast" title="Link to this heading"></a></h2>
+<p>While brightness relates to how many pixels lie at the upper end of
+the scale, you can think of contrast as how spread out the pixel values
+are across the scale.</p>
+<p>For example, the blobs image we’ve been using already has high contrast.
+We can see this in the histogram: pixel values are well-spread out, and
+there are distinct peaks at opposite ends of the scale. This indicates
+a large difference between dark and bright areas, resulting in high contrast.</p>
+<p>One way to change the contrast is by adjusting the grayscale display range.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">show_image_histogram</span><span class="p">(</span><span class="n">blobs</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Narrow range: 100 – 150 (Higher contrast)&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+<span class="n">show_image_histogram</span><span class="p">(</span><span class="n">blobs</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Wide Range: -100 – 350 (Low contrast)&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">100</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">350</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="sphx-glr-horizontal">
+<li><img src="../_images/sphx_glr_03_brightness_contrast_004.png" srcset="../_images/sphx_glr_03_brightness_contrast_004.png" alt="Narrow range: 100 – 150 (Higher contrast), Image, Histogram" class = "sphx-glr-multi-img"/></li>
+<li><img src="../_images/sphx_glr_03_brightness_contrast_005.png" srcset="../_images/sphx_glr_03_brightness_contrast_005.png" alt="Wide Range: -100 – 350 (Low contrast), Image, Histogram" class = "sphx-glr-multi-img"/></li>
+</ul>
+<ul class="simple">
+<li><p>By <strong>narrowing the display range</strong> to 100–150, the pixels are forced toward opposite ends (black and white), making the image to have <strong>more contrast</strong>.</p></li>
+<li><p>By <strong>widening the display range</strong> to -100–350, more pixels cluster in the middle of the grayscale. Because there’s less difference between the lightest and darkest displayed values, the image appears to have <strong>less contrast</strong>.</p></li>
+</ul>
+</section>
+<section id="practical-example">
+<h2>Practical Example<a class="headerlink" href="#practical-example" title="Link to this heading"></a></h2>
+<p>Here we have two fluorescence images showing mitochondria under two
+different conditions:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tifffile</span> <span class="kn">import</span> <span class="n">imread</span>
+
+<span class="n">mito_1</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s1">&#39;images/mitochondria_1.tif&#39;</span><span class="p">)</span>
+<span class="n">mito_2</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s1">&#39;images/mitochondria_2.tif&#39;</span><span class="p">)</span>
+
+<span class="n">show_image_histogram</span><span class="p">(</span><span class="n">mito_1</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Condition 1 (Automatic display)&quot;</span><span class="p">)</span>
+<span class="n">show_image_histogram</span><span class="p">(</span><span class="n">mito_2</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Condition 2 (Automatic display)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="sphx-glr-horizontal">
+<li><img src="../_images/sphx_glr_03_brightness_contrast_006.png" srcset="../_images/sphx_glr_03_brightness_contrast_006.png" alt="Condition 1 (Automatic display), Image, Histogram" class = "sphx-glr-multi-img"/></li>
+<li><img src="../_images/sphx_glr_03_brightness_contrast_007.png" srcset="../_images/sphx_glr_03_brightness_contrast_007.png" alt="Condition 2 (Automatic display), Image, Histogram" class = "sphx-glr-multi-img"/></li>
+</ul>
+<p>From the images above, both look similar. However, this is <em>misleading</em>.
+Because their histograms show different intensity distributions.</p>
+<p>Since fluorescence intensity represents the detected fluorophore signal,
+the mitochondria clearly don’t contain the same amount of fluorophore,
+even though they may look similar in the above image representations.</p>
+<p>A more accurate way to compare them is to use the <strong>same display range</strong>
+(brightness and contrast) for both:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Determine a global min/max from both images</span>
+<span class="n">max_val</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">mito_1</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">mito_2</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="n">min_val</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">mito_1</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">mito_2</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+
+<span class="n">show_image_histogram</span><span class="p">(</span><span class="n">mito_1</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Condition 1 (Display range: </span><span class="si">{</span><span class="n">min_val</span><span class="si">}</span><span class="s2">–</span><span class="si">{</span><span class="n">max_val</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+    <span class="n">vmin</span><span class="o">=</span><span class="n">min_val</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">max_val</span><span class="p">)</span>
+<span class="n">show_image_histogram</span><span class="p">(</span><span class="n">mito_2</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Condition 2 (Display range: </span><span class="si">{</span><span class="n">min_val</span><span class="si">}</span><span class="s2">–</span><span class="si">{</span><span class="n">max_val</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+    <span class="n">vmin</span><span class="o">=</span><span class="n">min_val</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">max_val</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="sphx-glr-horizontal">
+<li><img src="../_images/sphx_glr_03_brightness_contrast_008.png" srcset="../_images/sphx_glr_03_brightness_contrast_008.png" alt="Condition 1 (Display range: 348–2478), Image, Histogram" class = "sphx-glr-multi-img"/></li>
+<li><img src="../_images/sphx_glr_03_brightness_contrast_009.png" srcset="../_images/sphx_glr_03_brightness_contrast_009.png" alt="Condition 2 (Display range: 348–2478), Image, Histogram" class = "sphx-glr-multi-img"/></li>
+</ul>
+<p>By using a the same display range, you can see the difference between
+the two conditions more clearly.</p>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
+<p>Brightness and contrast (in this context) are simply how we set the
+scale or range of values represented by a grayscale gradient.</p>
+</section>
+<section id="important">
+<h2>Important<a class="headerlink" href="#important" title="Link to this heading"></a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Changing the display range does not change the pixel values of
+the image itself. However, when you save or copy the image after
+adjusting the display, it may automatically rescale the pixel values,
+because most image viewers expect a standard range of 0–255 (for
+8-bit) or 0–65,535 (for 16-bit).</p>
+<p>This is also the case when using ImageJ.</p>
+</div>
+<p>To rescale the pixel values of the image to a standard display range,
+we can use the following steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Clip</strong> the pixel values to a specified minimum (<code class="docutils literal notranslate"><span class="pre">minval</span></code>) and maximum (<code class="docutils literal notranslate"><span class="pre">maxval</span></code>).</p></li>
+<li><p><strong>Normalize</strong> the clipped values to 0–1.</p></li>
+<li><p><strong>Scale</strong> this range to 0–255 (for 8-bit) or 0–65,535 (for 16-bit).</p></li>
+</ol>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rescale</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">minval</span><span class="p">,</span> <span class="n">maxval</span><span class="p">,</span> <span class="n">image_type</span><span class="o">=</span><span class="s1">&#39;8-bit&#39;</span><span class="p">):</span>
+    <span class="n">clipped</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">minval</span><span class="p">,</span> <span class="n">maxval</span><span class="p">)</span>
+    <span class="n">normalized</span> <span class="o">=</span> <span class="p">(</span><span class="n">clipped</span> <span class="o">-</span> <span class="n">clipped</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">clipped</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">maxval</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">clipped</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">minval</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">image_type</span><span class="o">==</span><span class="s1">&#39;8-bit&#39;</span><span class="p">:</span>
+        <span class="n">scaled</span> <span class="o">=</span> <span class="n">normalized</span> <span class="o">*</span> <span class="mi">255</span>
+        <span class="k">return</span> <span class="n">scaled</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">image_type</span><span class="o">==</span><span class="s1">&#39;16-bit&#39;</span><span class="p">:</span>
+        <span class="n">scaled</span> <span class="o">=</span> <span class="n">normalized</span> <span class="o">*</span> <span class="mi">65535</span>
+        <span class="k">return</span> <span class="n">scaled</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Let’s apply it to our examples above (namely, the image with <em>shifted</em>
+range to lower the brightness and <em>narrowed range</em> to increase the contrast)
+and display them with the standard 0–255 range:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">shifted</span> <span class="o">=</span> <span class="n">rescale</span><span class="p">(</span><span class="n">blobs</span><span class="p">,</span> <span class="n">minval</span><span class="o">=</span><span class="n">blobs</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">+</span><span class="n">shift</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="n">blobs</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">+</span><span class="n">shift</span><span class="p">)</span>
+<span class="n">narrow_range</span> <span class="o">=</span> <span class="n">rescale</span><span class="p">(</span><span class="n">blobs</span><span class="p">,</span> <span class="n">minval</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+
+<span class="n">show_image_histogram</span><span class="p">(</span><span class="n">shifted</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Shifted 100 and Rescaled&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+<span class="n">show_image_histogram</span><span class="p">(</span><span class="n">narrow_range</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Narrow range (100–150) and Rescaled&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="sphx-glr-horizontal">
+<li><img src="../_images/sphx_glr_03_brightness_contrast_010.png" srcset="../_images/sphx_glr_03_brightness_contrast_010.png" alt="Shifted 100 and Rescaled, Image, Histogram" class = "sphx-glr-multi-img"/></li>
+<li><img src="../_images/sphx_glr_03_brightness_contrast_011.png" srcset="../_images/sphx_glr_03_brightness_contrast_011.png" alt="Narrow range (100–150) and Rescaled, Image, Histogram" class = "sphx-glr-multi-img"/></li>
+</ul>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.484 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-03-brightness-contrast-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/b885e6f9eb5c2fe2f550155fad4b6ced/03_brightness_contrast.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">03_brightness_contrast.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/fc534606fced036c23b13a05c96ef8a5/03_brightness_contrast.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">03_brightness_contrast.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/acd3950b9eba283fdd0496776b819ef8/03_brightness_contrast.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">03_brightness_contrast.zip</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="02_single_channel_image.html" class="btn btn-neutral float-left" title="Single-Channel Image" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="04_thresholding.html" class="btn btn-neutral float-right" title="Thresholding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Ira Novianti.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
