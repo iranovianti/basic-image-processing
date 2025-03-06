@@ -1,10 +1,9 @@
 """
-.. _binary-image:
 ============
 Binary Image
 ============
 
-Previously, in :ref:`thresholding` topic, we learned that defining a threshold value
+Previously, we learned that defining a threshold value
 can help identify the signal in an image. The result of this can be represented by a binary image.
 
 You can think of a binary image as a map showing where the objects of interest are located.
