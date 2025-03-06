@@ -1,5 +1,4 @@
 """
-.. _brightness-and-contrast:
 =======================
 Brightness and Contrast
 =======================

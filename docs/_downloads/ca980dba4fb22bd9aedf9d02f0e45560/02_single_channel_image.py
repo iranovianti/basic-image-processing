@@ -1,5 +1,4 @@
 """
-.. _single-channel-image:
 ====================
 Single-Channel Image
 ====================

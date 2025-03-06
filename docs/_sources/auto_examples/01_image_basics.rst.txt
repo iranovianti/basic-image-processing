@@ -18,7 +18,6 @@
 .. _sphx_glr_auto_examples_01_image_basics.py:
 
 
-.. _image-basics:
 ================
 What is an image
 ================
@@ -30,7 +29,7 @@ matrix corresponds to a single pixel. The pixel value determines the brightness 
 - A larger value means a brighter pixel.
 - A smaller value means a darker pixel.
 
-.. GENERATED FROM PYTHON SOURCE LINES 17-33
+.. GENERATED FROM PYTHON SOURCE LINES 16-32
 
 Pixel values of most types of images are often represented as 8-bit
 unsigned integers ranging from 0 to 255:
@@ -49,7 +48,7 @@ Let’s consider an example of three 8 × 8 matrices, where each matrix
 contains different pixel values and visualize them as images.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-82
+.. GENERATED FROM PYTHON SOURCE LINES 32-81
 
 .. code-block:: Python
 
@@ -114,13 +113,13 @@ contains different pixel values and visualize them as images.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-86
+.. GENERATED FROM PYTHON SOURCE LINES 82-85
 
 When visualized, these matrices appear as grayscale images and the
 pixels with higher values appear brighter.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-100
+.. GENERATED FROM PYTHON SOURCE LINES 87-99
 
 Colored Images
 ==============
@@ -135,7 +134,7 @@ For example, we can stack the three 8 × 8 matrices, matrix 1 for Red, 2 for Gre
 and 3 for Blue, results in an 8 × 8 × 3 matrix and visualize it as a colored image.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 100-112
+.. GENERATED FROM PYTHON SOURCE LINES 99-111
 
 .. code-block:: Python
 
@@ -169,7 +168,7 @@ and 3 for Blue, results in an 8 × 8 × 3 matrix and visualize it as a colored i
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 113-120
+.. GENERATED FROM PYTHON SOURCE LINES 112-119
 
 As we can see:
 
@@ -183,7 +182,7 @@ color in an image.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.183 seconds)
+   **Total running time of the script:** (0 minutes 0.169 seconds)
 
 
 .. _sphx_glr_download_auto_examples_01_image_basics.py:

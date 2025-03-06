@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Binary Image Operations &mdash; Basic Image Processing 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Binary Image" href="05_binary_image.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Basic Image Processing
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">BASICS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01_image_basics.html">What is an image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_single_channel_image.html">Single-Channel Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_brightness_contrast.html">Brightness and Contrast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_thresholding.html">Thresholding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_binary_image.html">Binary Image</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">BINARY IMAGE</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Binary Image Operations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#morphological-operations">Morphological Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logical-operations">Logical Operations</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Basic Image Processing</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Binary Image Operations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/auto_examples/06_binary_operations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-06-binary-operations-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="binary-image-operations">
+<span id="sphx-glr-auto-examples-06-binary-operations-py"></span><h1>Binary Image Operations<a class="headerlink" href="#binary-image-operations" title="Link to this heading"></a></h1>
+<p>In this section, we will learn some basic operations that are usually done on a binary image, which
+I think are especially helpful for processing fluorescence images.</p>
+<p>To demonstrate the concept, we will use an 8x8 binary image.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patheffects</span> <span class="k">as</span> <span class="nn">path_effects</span>
+<span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">binary_erosion</span><span class="p">,</span> <span class="n">binary_dilation</span><span class="p">,</span> <span class="n">disk</span>
+
+<span class="n">binary_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                         <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                         <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                         <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                         <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                         <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                         <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                         <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p>First, let’s create a function that displays the image which has an
+option that lets you put a pixel value on top of each pixel.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">display_image</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_value</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">show_value</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+                               <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+                <span class="n">text</span><span class="o">.</span><span class="n">set_path_effects</span><span class="p">([</span><span class="n">path_effects</span><span class="o">.</span><span class="n">Stroke</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">),</span>
+                                       <span class="n">path_effects</span><span class="o">.</span><span class="n">Normal</span><span class="p">()])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">binary_image</span><span class="p">,</span> <span class="s2">&quot;Binary Image&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">binary_image</span><span class="p">,</span> <span class="s2">&quot;with Pixel Values&quot;</span><span class="p">,</span> <span class="n">show_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../_images/sphx_glr_06_binary_operations_001.png" srcset="../_images/sphx_glr_06_binary_operations_001.png" alt="Binary Image, with Pixel Values" class = "sphx-glr-single-img"/><section id="morphological-operations">
+<h2>Morphological Operations<a class="headerlink" href="#morphological-operations" title="Link to this heading"></a></h2>
+<p>Morphological operations are used to change the shape (or morphology) of a binary object.
+The most common ones are <strong>erosion</strong> and <strong>dilation</strong>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">dilated</span> <span class="o">=</span> <span class="n">binary_dilation</span><span class="p">(</span><span class="n">binary_image</span><span class="p">)</span>
+<span class="n">eroded</span> <span class="o">=</span> <span class="n">binary_erosion</span><span class="p">(</span><span class="n">binary_image</span><span class="p">)</span>
+
+<span class="c1"># Display original, dilated, and eroded images side by side</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">binary_image</span><span class="p">,</span> <span class="s2">&quot;Original Image&quot;</span><span class="p">,</span> <span class="n">show_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dilated</span><span class="p">,</span> <span class="s2">&quot;Dilated&quot;</span><span class="p">,</span> <span class="n">show_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">eroded</span><span class="p">,</span> <span class="s2">&quot;Eroded&quot;</span><span class="p">,</span> <span class="n">show_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../_images/sphx_glr_06_binary_operations_002.png" srcset="../_images/sphx_glr_06_binary_operations_002.png" alt="Original Image, Dilated, Eroded" class = "sphx-glr-single-img"/><p>The above operations were done using a single pixel, which means they used a matrix of size 1 (<cite>[[1]]</cite>).
+This matrix used for morphological operations is also called a “structuring element”.
+We can also use a structuring element of a different size, such as a 3×3 matrix, for example.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">matrix_3x3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">matrix_3x3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[[1. 1. 1.]
+ [1. 1. 1.]
+ [1. 1. 1.]]
+</pre></div>
+</div>
+<p>Now, let’s apply erosion using this <strong>3×3 structuring element</strong> and
+compare the results.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">eroded_3x3</span> <span class="o">=</span> <span class="n">binary_erosion</span><span class="p">(</span><span class="n">binary_image</span><span class="p">,</span> <span class="n">matrix_3x3</span><span class="p">)</span>
+
+<span class="c1"># Compare default erosion (1x1) vs erosion with (3x3) structuring element</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">binary_image</span><span class="p">,</span> <span class="s2">&quot;Original Image&quot;</span><span class="p">,</span> <span class="n">show_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">eroded</span><span class="p">,</span> <span class="s2">&quot;Eroded (1×1)&quot;</span><span class="p">,</span> <span class="n">show_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">eroded_3x3</span><span class="p">,</span> <span class="s2">&quot;Eroded (3×3)&quot;</span><span class="p">,</span> <span class="n">show_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../_images/sphx_glr_06_binary_operations_003.png" srcset="../_images/sphx_glr_06_binary_operations_003.png" alt="Original Image, Eroded (1×1), Eroded (3×3)" class = "sphx-glr-single-img"/><p>We can also use structuring element of different shapes</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">square_3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>  <span class="c1"># Square (3x3)</span>
+<span class="n">square_5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># Square (5x5)</span>
+<span class="n">disk_1</span> <span class="o">=</span> <span class="n">disk</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Disk with radius 1</span>
+<span class="n">disk_2</span> <span class="o">=</span> <span class="n">disk</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Disk with radius 2</span>
+
+<span class="c1"># Display structuring elements</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">square_3</span><span class="p">,</span> <span class="s2">&quot;Square (3×3)&quot;</span><span class="p">,</span> <span class="n">show_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">square_5</span><span class="p">,</span> <span class="s2">&quot;Square (5×5)&quot;</span><span class="p">,</span> <span class="n">show_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">disk_1</span><span class="p">,</span> <span class="s2">&quot;Disk (r=1)&quot;</span><span class="p">,</span> <span class="n">show_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">disk_2</span><span class="p">,</span> <span class="s2">&quot;Disk (r=2)&quot;</span><span class="p">,</span> <span class="n">show_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../_images/sphx_glr_06_binary_operations_004.png" srcset="../_images/sphx_glr_06_binary_operations_004.png" alt="Square (3×3), Square (5×5), Disk (r=1), Disk (r=2)" class = "sphx-glr-single-img"/><p>Let’s apply erosion on the binary image of our blobs image.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="c1"># Load the blobs image</span>
+<span class="n">blob_path</span> <span class="o">=</span> <span class="s2">&quot;images/blobs.jpeg&quot;</span>
+<span class="n">blobs</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">blob_path</span><span class="p">)</span>
+<span class="n">blobs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">blobs</span><span class="p">)</span>
+
+<span class="c1"># Convert grayscale image to binary using thresholding</span>
+<span class="c1"># The threshold value is arbitrary (but not really, can you guess why?)</span>
+<span class="n">blobs_bin</span> <span class="o">=</span> <span class="n">blobs</span> <span class="o">&gt;</span> <span class="mi">180</span>
+
+<span class="c1"># Apply erosion with square structuring elements (3x3, 5x5, 7x7, 9x9)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Erosion with Square structuring element&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">blobs_bin</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Binary Image&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">size</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]):</span>
+    <span class="n">eroded_img</span> <span class="o">=</span> <span class="n">binary_erosion</span><span class="p">(</span><span class="n">blobs_bin</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">)))</span>
+    <span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">eroded_img</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Square (</span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">×</span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Apply erosion with disk structuring elements (r=1, 2, 3, 4)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Erosion with Disk structuring element&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">blobs_bin</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Binary Image&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">radius</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]):</span>
+    <span class="n">eroded_img</span> <span class="o">=</span> <span class="n">binary_erosion</span><span class="p">(</span><span class="n">blobs_bin</span><span class="p">,</span> <span class="n">disk</span><span class="p">(</span><span class="n">radius</span><span class="p">))</span>  <span class="c1"># Apply erosion</span>
+    <span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">eroded_img</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;disk (r=</span><span class="si">{</span><span class="n">radius</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="sphx-glr-horizontal">
+<li><img src="../_images/sphx_glr_06_binary_operations_005.png" srcset="../_images/sphx_glr_06_binary_operations_005.png" alt="Erosion with Square structuring element, Binary Image, Square (3×3), Square (5×5), Square (7×7), Square (9×9)" class = "sphx-glr-multi-img"/></li>
+<li><img src="../_images/sphx_glr_06_binary_operations_006.png" srcset="../_images/sphx_glr_06_binary_operations_006.png" alt="Erosion with Disk structuring element, Binary Image, disk (r=1), disk (r=2), disk (r=3), disk (r=4)" class = "sphx-glr-multi-img"/></li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Can you think of any useful applications of erosion, dilation, or the combination of both?</p>
+</div>
+</section>
+<section id="logical-operations">
+<h2>Logical Operations<a class="headerlink" href="#logical-operations" title="Link to this heading"></a></h2>
+<p>You may have heard about logical operations like <strong>OR</strong> and <strong>AND</strong>:
+- <strong>True AND False</strong> results in <strong>False</strong>.
+- <strong>True OR False</strong> results in <strong>True</strong>.</p>
+<p>Since binary images contain only binary values (0 and 1), we can apply these logical operations to them.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert the binary image to boolean</span>
+<span class="n">binary_image</span> <span class="o">=</span> <span class="n">binary_image</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+
+<span class="c1"># Show different types of logical operations on the binary image</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">binary_image</span><span class="p">,</span> <span class="s2">&quot;Binary Image (A)&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">eroded</span><span class="p">,</span> <span class="s2">&quot;Eroded (B)&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">binary_image</span> <span class="o">|</span> <span class="n">eroded</span><span class="p">,</span> <span class="s2">&quot;A | B (OR)&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">binary_image</span> <span class="o">^</span> <span class="n">eroded</span><span class="p">,</span> <span class="s2">&quot;A ^ B (XOR)&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">binary_image</span> <span class="o">&amp;</span> <span class="n">eroded</span><span class="p">,</span> <span class="s2">&quot;A &amp; B (AND)&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="o">~</span><span class="n">binary_image</span><span class="p">,</span> <span class="s2">&quot;~A (NOT)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../_images/sphx_glr_06_binary_operations_007.png" srcset="../_images/sphx_glr_06_binary_operations_007.png" alt="Binary Image (A), Eroded (B), A | B (OR), A ^ B (XOR), A & B (AND), ~A (NOT)" class = "sphx-glr-single-img"/><p>So essentially, logical operations on binary images work like this:
+- <strong>AND (`&amp;`)</strong> keeps only the overlapping regions.
+- <strong>OR (`|`)</strong> merges both binary images.
+- <strong>XOR (`^`)</strong> keeps only the non-overlapping areas.
+- <strong>NOT (`~`)</strong> inverts the image.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There are different ways to perform logical operations on a binary image.
+The operators we used so far (<cite>|</cite>, <cite>^</cite>, <cite>&amp;</cite>, <cite>~</cite>) are called <strong>bitwise operators</strong>.
+These work correctly for boolean values (<cite>True</cite>, <cite>False</cite>).
+When using integers (<cite>0</cite>, <cite>1</cite>), the result may not be as expected.
+In such cases, it is better to use <cite>numpy.logical</cite> operations:
+<cite>numpy.logical_and</cite>, <cite>numpy.logical_or</cite>, <cite>numpy.logical_xor</cite>, <cite>numpy.logical_not</cite>.</p>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])))</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[ True False False  True]
+[-1 -2 -2 -1]
+[ True False False  True]
+</pre></div>
+</div>
+<p>Let’s apply logical operations to the binary image of the blobs and its eroded version.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">blobs_eroded</span> <span class="o">=</span> <span class="n">binary_erosion</span><span class="p">(</span><span class="n">blobs_bin</span><span class="p">,</span> <span class="n">disk</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">blobs_bin</span><span class="p">,</span> <span class="s2">&quot;Binary Image (A)&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">blobs_eroded</span><span class="p">,</span> <span class="s2">&quot;Eroded (B)&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">blobs_bin</span> <span class="o">|</span> <span class="n">blobs_eroded</span><span class="p">,</span> <span class="s2">&quot;A | B (OR)&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">blobs_bin</span> <span class="o">^</span> <span class="n">blobs_eroded</span><span class="p">,</span> <span class="s2">&quot;A ^ B (XOR)&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">blobs_bin</span> <span class="o">&amp;</span> <span class="n">blobs_eroded</span><span class="p">,</span> <span class="s2">&quot;A &amp; B (AND)&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="o">~</span><span class="n">blobs_bin</span><span class="p">,</span> <span class="s2">&quot;~A (NOT)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../_images/sphx_glr_06_binary_operations_008.png" srcset="../_images/sphx_glr_06_binary_operations_008.png" alt="Binary Image (A), Eroded (B), A | B (OR), A ^ B (XOR), A & B (AND), ~A (NOT)" class = "sphx-glr-single-img"/><p>We can see that applying <strong>erosion</strong> followed by the <strong>XOR</strong> operation gives us the boundary of the object.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Can you think of any combination of morphological operations and logical operations that might be useful?</p>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.688 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-06-binary-operations-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/62482f7fa6901b783c8de48c55528250/06_binary_operations.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">06_binary_operations.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/c6cc276099b3614c88337e62e0e68815/06_binary_operations.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">06_binary_operations.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/e0f45e0dd94ecfaca7e37241afc232d9/06_binary_operations.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">06_binary_operations.zip</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="05_binary_image.html" class="btn btn-neutral float-left" title="Binary Image" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Ira Novianti.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

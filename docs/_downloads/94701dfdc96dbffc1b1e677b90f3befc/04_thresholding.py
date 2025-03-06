@@ -1,5 +1,4 @@
 """
-.. _thresholding:
 ============
 Thresholding
 ============

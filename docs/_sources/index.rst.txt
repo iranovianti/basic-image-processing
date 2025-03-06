@@ -13,3 +13,9 @@ Basic Image Processing tutorials
    auto_examples/03_brightness_contrast
    auto_examples/04_thresholding
    auto_examples/05_binary_image
+
+.. toctree::
+   :maxdepth: 1
+   :caption: BINARY IMAGE
+
+   auto_examples/06_binary_operations

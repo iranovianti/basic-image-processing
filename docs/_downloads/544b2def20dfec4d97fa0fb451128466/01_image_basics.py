@@ -1,5 +1,4 @@
 """
-.. _image-basics:
 ================
 What is an image
 ================

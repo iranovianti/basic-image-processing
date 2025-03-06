@@ -18,12 +18,11 @@
 .. _sphx_glr_auto_examples_05_binary_image.py:
 
 
-.. _binary-image:
 ============
 Binary Image
 ============
 
-Previously, in :ref:`thresholding` topic, we learned that defining a threshold value
+Previously, we learned that defining a threshold value
 can help identify the signal in an image. The result of this can be represented by a binary image.
 
 You can think of a binary image as a map showing where the objects of interest are located.
@@ -31,7 +30,7 @@ Pixels belonging to the signal become ``True`` (or 1), and pixels belonging to t
 
 Let's create a binary image from our example `blobs.jpeg` by applying Otsu's thresholding method:
 
-.. GENERATED FROM PYTHON SOURCE LINES 15-41
+.. GENERATED FROM PYTHON SOURCE LINES 14-40
 
 .. code-block:: Python
 
@@ -73,7 +72,7 @@ Let's create a binary image from our example `blobs.jpeg` by applying Otsu's thr
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-47
+.. GENERATED FROM PYTHON SOURCE LINES 41-46
 
 It's called "binary" because it contains only two values — (1 and 0)
 or (``True`` and ``False``) — corresponding to the pixels we want
@@ -81,7 +80,7 @@ or (``True`` and ``False``) — corresponding to the pixels we want
 respectively.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-51
+.. GENERATED FROM PYTHON SOURCE LINES 46-50
 
 .. code-block:: Python
 
@@ -117,7 +116,7 @@ respectively.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-62
+.. GENERATED FROM PYTHON SOURCE LINES 51-61
 
 The ``bin_image`` image above maps the location of signals, which is defined
 by pixels with a value greater than the threshold ``blobs > th_otsu``.
@@ -130,7 +129,7 @@ For example, we can make binary images of:
 - Pixels with values in certain range (value 1 < image < value 2), can be defined as ``(image > val_1) & (image < val_2)``
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-87
+.. GENERATED FROM PYTHON SOURCE LINES 61-86
 
 .. code-block:: Python
 
@@ -174,7 +173,7 @@ For example, we can make binary images of:
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.724 seconds)
+   **Total running time of the script:** (0 minutes 0.323 seconds)
 
 
 .. _sphx_glr_download_auto_examples_05_binary_image.py:

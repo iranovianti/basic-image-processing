@@ -18,7 +18,6 @@
 .. _sphx_glr_auto_examples_03_brightness_contrast.py:
 
 
-.. _brightness-and-contrast:
 =======================
 Brightness and Contrast
 =======================
@@ -31,7 +30,7 @@ adjusting this range affects the **brightness and contrast** of an image.
 
 To show how this works in practice, we'll use *blobs.jpeg* as our example image.
 
-.. GENERATED FROM PYTHON SOURCE LINES 16-24
+.. GENERATED FROM PYTHON SOURCE LINES 15-23
 
 .. code-block:: Python
 
@@ -50,7 +49,7 @@ To show how this works in practice, we'll use *blobs.jpeg* as our example image.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-36
+.. GENERATED FROM PYTHON SOURCE LINES 24-35
 
 Before we start, let's create a simple function that displays an image
 and its histogram side by side. We can also specify a minimum and
@@ -64,7 +63,7 @@ In addition, red and green lines will be drawn on the histogram to indicate
 ``vmin`` and ``vmax``, respectively.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-62
+.. GENERATED FROM PYTHON SOURCE LINES 35-61
 
 .. code-block:: Python
 
@@ -101,7 +100,7 @@ In addition, red and green lines will be drawn on the histogram to indicate
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-70
+.. GENERATED FROM PYTHON SOURCE LINES 62-69
 
 By default, ``plt.imshow``, automatically sets the darkest
 color (black) to the minimum pixel value and the brightest color (white)
@@ -111,7 +110,7 @@ Let's look at the distribution of these pixel values using the ``show_image_hist
 function:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-73
+.. GENERATED FROM PYTHON SOURCE LINES 69-72
 
 .. code-block:: Python
 
@@ -130,7 +129,7 @@ function:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-83
+.. GENERATED FROM PYTHON SOURCE LINES 73-82
 
 Brightness
 ==========
@@ -142,7 +141,7 @@ One way to adjust brightness is to **shift the display range (scale)**.
 We can do this by changing ``vmin`` and ``vmax``.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-89
+.. GENERATED FROM PYTHON SOURCE LINES 82-88
 
 .. code-block:: Python
 
@@ -176,7 +175,7 @@ We can do this by changing ``vmin`` and ``vmax``.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 90-97
+.. GENERATED FROM PYTHON SOURCE LINES 89-96
 
 .. note::
   Note that if a pixel's value falls outside the specified display range,
@@ -186,13 +185,13 @@ We can do this by changing ``vmin`` and ``vmax``.
   values are shown as black.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 99-102
+.. GENERATED FROM PYTHON SOURCE LINES 98-101
 
 - **Shifting the scale to the right** places fewer pixels at the upper end, **decreasing brightness**.
 - **Shifting the scale to the left** places more pixels at the upper end, **increasing brightness**.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 105-118
+.. GENERATED FROM PYTHON SOURCE LINES 104-117
 
 Contrast
 ========
@@ -208,7 +207,7 @@ a large difference between dark and bright areas, resulting in high contrast.
 One way to change the contrast is by adjusting the grayscale display range.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 118-123
+.. GENERATED FROM PYTHON SOURCE LINES 117-122
 
 .. code-block:: Python
 
@@ -241,13 +240,13 @@ One way to change the contrast is by adjusting the grayscale display range.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 124-127
+.. GENERATED FROM PYTHON SOURCE LINES 123-126
 
 - By **narrowing the display range** to 100–150, the pixels are forced toward opposite ends (black and white), making the image to have **more contrast**.
 - By **widening the display range** to -100–350, more pixels cluster in the middle of the grayscale. Because there's less difference between the lightest and darkest displayed values, the image appears to have **less contrast**.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 130-135
+.. GENERATED FROM PYTHON SOURCE LINES 129-134
 
 Practical Example
 =================
@@ -255,7 +254,7 @@ Here we have two fluorescence images showing mitochondria under two
 different conditions:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 135-144
+.. GENERATED FROM PYTHON SOURCE LINES 134-143
 
 .. code-block:: Python
 
@@ -292,7 +291,7 @@ different conditions:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 145-155
+.. GENERATED FROM PYTHON SOURCE LINES 144-154
 
 From the images above, both look similar. However, this is *misleading*.
 Because their histograms show different intensity distributions.
@@ -305,7 +304,7 @@ A more accurate way to compare them is to use the **same display range**
 (brightness and contrast) for both:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 155-165
+.. GENERATED FROM PYTHON SOURCE LINES 154-164
 
 .. code-block:: Python
 
@@ -343,13 +342,13 @@ A more accurate way to compare them is to use the **same display range**
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 166-169
+.. GENERATED FROM PYTHON SOURCE LINES 165-168
 
 By using a the same display range, you can see the difference between
 the two conditions more clearly.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 171-176
+.. GENERATED FROM PYTHON SOURCE LINES 170-175
 
 Summary
 =======
@@ -357,7 +356,7 @@ Brightness and contrast (in this context) are simply how we set the
 scale or range of values represented by a grayscale gradient.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 178-197
+.. GENERATED FROM PYTHON SOURCE LINES 177-196
 
 Important
 =========
@@ -379,7 +378,7 @@ we can use the following steps:
 3. **Scale** this range to 0–255 (for 8-bit) or 0–65,535 (for 16-bit).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 197-208
+.. GENERATED FROM PYTHON SOURCE LINES 196-207
 
 .. code-block:: Python
 
@@ -401,14 +400,14 @@ we can use the following steps:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 209-213
+.. GENERATED FROM PYTHON SOURCE LINES 208-212
 
 Let's apply it to our examples above (namely, the image with *shifted*
 range to lower the brightness and *narrowed range* to increase the contrast)
 and display them with the standard 0–255 range:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 213-219
+.. GENERATED FROM PYTHON SOURCE LINES 212-218
 
 .. code-block:: Python
 
@@ -445,7 +444,7 @@ and display them with the standard 0–255 range:
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.484 seconds)
+   **Total running time of the script:** (0 minutes 1.287 seconds)
 
 
 .. _sphx_glr_download_auto_examples_03_brightness_contrast.py:

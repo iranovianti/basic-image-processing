@@ -55,6 +55,10 @@
 <li class="toctree-l1"><a class="reference internal" href="04_thresholding.html">Thresholding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_binary_image.html">Binary Image</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">BINARY IMAGE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="06_binary_operations.html">Binary Image Operations</a></li>
+</ul>
 
         </div>
       </div>
@@ -81,21 +85,24 @@
            <div itemprop="articleBody">
              
   <p>Topics covered to understand basic image processing</p>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="- A larger value means a brighter pixel. - A smaller value means a darker pixel."><img alt="" src="../_images/sphx_glr_01_image_basics_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="An image can be thought of as a grid of numbers, like a matrix. The grid consists of rows (representing the image&#x27;s height) and columns (representing the width), where each value in the matrix corresponds to a single pixel. The pixel value determines the brightness of that spot in the image:"><img alt="" src="../_images/sphx_glr_01_image_basics_thumb.png" />
 <p><a class="reference internal" href="01_image_basics.html#sphx-glr-auto-examples-01-image-basics-py"><span class="std std-ref">What is an image</span></a></p>
-  <div class="sphx-glr-thumbnail-title">An image can be thought of as a grid of numbers, like a matrix. The grid consists</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="Grayscale ========= A single channel image is also often referred to as a grayscale image. A grayscale image simply maps the intensity values to shades of gray—from black (0 intensity) to white (maximum intensity)."><img alt="" src="../_images/sphx_glr_02_single_channel_image_thumb.png" />
+  <div class="sphx-glr-thumbnail-title">What is an image</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="In fluorescence imaging, we work with single-channel images. A single channel image simply means that each pixel has a single intensity value. In fluorescence images, each value represents how much light (or fluorescence) was detected at that point. This website gives a very good simple explanation on how the light detected is transformed into pixels."><img alt="" src="../_images/sphx_glr_02_single_channel_image_thumb.png" />
 <p><a class="reference internal" href="02_single_channel_image.html#sphx-glr-auto-examples-02-single-channel-image-py"><span class="std std-ref">Single-Channel Image</span></a></p>
-  <div class="sphx-glr-thumbnail-title">In fluorescence imaging, we work with single-channel images. A single channel image simply</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="We can also change the range of values represented by a color gradient. In grayscale, adjusting this range affects the brightness and contrast of an image."><img alt="" src="../_images/sphx_glr_03_brightness_contrast_thumb.png" />
+  <div class="sphx-glr-thumbnail-title">Single-Channel Image</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="Previously, in single-channel-image, we learned that we can assign different values to different colors using various color gradients."><img alt="" src="../_images/sphx_glr_03_brightness_contrast_thumb.png" />
 <p><a class="reference internal" href="03_brightness_contrast.html#sphx-glr-auto-examples-03-brightness-contrast-py"><span class="std std-ref">Brightness and Contrast</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Previously, in single-channel-image, we learned that we can assign different values to different colors using</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This can also be observed in our example image, blobs.jpeg."><img alt="" src="../_images/sphx_glr_04_thresholding_thumb.png" />
+  <div class="sphx-glr-thumbnail-title">Brightness and Contrast</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="Typically, in the histogram of most fluorescence images, the peak appears at the lower end of the distribution. This is because the image usually consists mostly of background with values close to zero, while the signal we are interested in, which has higher values, is more sparse, resulting in fewer counts."><img alt="" src="../_images/sphx_glr_04_thresholding_thumb.png" />
 <p><a class="reference internal" href="04_thresholding.html#sphx-glr-auto-examples-04-thresholding-py"><span class="std std-ref">Thresholding</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Typically, in the histogram of most fluorescence images, the peak appears at</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="You can think of a binary image as a map showing where the objects of interest are located. Pixels belonging to the signal become True (or 1), and pixels belonging to the background become False (or 0)."><img alt="" src="../_images/sphx_glr_05_binary_image_thumb.png" />
+  <div class="sphx-glr-thumbnail-title">Thresholding</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="Previously, we learned that defining a threshold value can help identify the signal in an image. The result of this can be represented by a binary image."><img alt="" src="../_images/sphx_glr_05_binary_image_thumb.png" />
 <p><a class="reference internal" href="05_binary_image.html#sphx-glr-auto-examples-05-binary-image-py"><span class="std std-ref">Binary Image</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Previously, in thresholding topic, we learned that defining a threshold value</div>
+  <div class="sphx-glr-thumbnail-title">Binary Image</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="In this section, we will learn some basic operations that are usually done on a binary image, which I think are especially helpful for processing fluorescence images."><img alt="" src="../_images/sphx_glr_06_binary_operations_thumb.png" />
+<p><a class="reference internal" href="06_binary_operations.html#sphx-glr-auto-examples-06-binary-operations-py"><span class="std std-ref">Binary Image Operations</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Binary Image Operations</div>
 </div></div><div class="toctree-wrapper compound">
 </div>
 <div class="sphx-glr-footer sphx-glr-footer-gallery docutils container">

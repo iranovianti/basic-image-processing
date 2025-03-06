@@ -18,7 +18,6 @@
 .. _sphx_glr_auto_examples_04_thresholding.py:
 
 
-.. _thresholding:
 ============
 Thresholding
 ============
@@ -30,7 +29,7 @@ in, which has higher values, is more sparse, resulting in fewer counts.
 
 This can also be observed in our example image, *blobs.jpeg*.
 
-.. GENERATED FROM PYTHON SOURCE LINES 15-45
+.. GENERATED FROM PYTHON SOURCE LINES 14-44
 
 .. code-block:: Python
 
@@ -76,7 +75,7 @@ This can also be observed in our example image, *blobs.jpeg*.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-57
+.. GENERATED FROM PYTHON SOURCE LINES 45-56
 
 From the distribution above, we can see that the value on the left
 represents the background, and the value on the right represents the signal.
@@ -90,7 +89,7 @@ Below is a simple function to show the thresholding result by visualizing
 the pixels with values greater than the threshold ``image > threshold``.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-81
+.. GENERATED FROM PYTHON SOURCE LINES 56-80
 
 .. code-block:: Python
 
@@ -125,13 +124,13 @@ the pixels with values greater than the threshold ``image > threshold``.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-85
+.. GENERATED FROM PYTHON SOURCE LINES 81-84
 
 For example, let's make an initial guess and set the cutoff value, or
 threshold, to 122. Right in the middle.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-88
+.. GENERATED FROM PYTHON SOURCE LINES 84-87
 
 .. code-block:: Python
 
@@ -150,7 +149,7 @@ threshold, to 122. Right in the middle.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 89-100
+.. GENERATED FROM PYTHON SOURCE LINES 88-99
 
 The result (the image on the right), represented as a binary image,
 is essentially a map showing the location of the object we're interested
@@ -164,7 +163,7 @@ the image data have different value distributions.
 Here are a few popular examples.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 100-115
+.. GENERATED FROM PYTHON SOURCE LINES 99-114
 
 .. code-block:: Python
 
@@ -221,7 +220,7 @@ Here are a few popular examples.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 116-117
+.. GENERATED FROM PYTHON SOURCE LINES 115-116
 
 Different algorithms produce different results, so it's best to
 experiment with various options to find the best fit for your purpose.
@@ -229,7 +228,7 @@ experiment with various options to find the best fit for your purpose.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.029 seconds)
+   **Total running time of the script:** (0 minutes 0.839 seconds)
 
 
 .. _sphx_glr_download_auto_examples_04_thresholding.py:
