@@ -155,6 +155,7 @@ plt.show()
 # Logical Operations
 # ==================
 # You may have heard about logical operations like **OR** and **AND**:
+#
 # - **True AND False** results in **False**.
 # - **True OR False** results in **True**.
 #
@@ -177,9 +178,10 @@ plt.show()
 
 ######################################################################
 # So essentially, logical operations on binary images work like this:
-# - **AND (`&`)** keeps only the overlapping regions.
+#
 # - **OR (`|`)** merges both binary images.
 # - **XOR (`^`)** keeps only the non-overlapping areas.
+# - **AND (`&`)** keeps only the overlapping regions.
 # - **NOT (`~`)** inverts the image.
 #
 # .. note::
@@ -187,8 +189,7 @@ plt.show()
 #   The operators we used so far (`|`, `^`, `&`, `~`) are called **bitwise operators**.
 #   These work correctly for boolean values (`True`, `False`).
 #   When using integers (`0`, `1`), the result may not be as expected.
-#   In such cases, it is better to use `numpy.logical` operations:
-#   `numpy.logical_and`, `numpy.logical_or`, `numpy.logical_xor`, `numpy.logical_not`.
+#   In such cases, it is better to use `numpy.logical <https://numpy.org/doc/2.1/reference/routines.logic.html#logical-operations>`_ operations.
 #
 
 print(~np.array([False, True, True, False]))
