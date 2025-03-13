@@ -96,15 +96,18 @@ option that lets you put a pixel value on top of each pixel.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-57
+.. GENERATED FROM PYTHON SOURCE LINES 52-60
 
 Morphological Operations
 ========================
 Morphological operations are used to change the shape (or morphology) of a binary object.
-The most common ones are **erosion** and **dilation**.
+The most common ones are `erosion <https://en.wikipedia.org/wiki/Erosion_(morphology)>`_ and `dilation <https://en.wikipedia.org/wiki/Dilation_(morphology)>`_.
+
+As the name suggests, **erosion** erode a binary object by removing pixels from its outer boundary.
+Conversely, **dilation** dilates the object by adding pixels to its outer area.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-69
+.. GENERATED FROM PYTHON SOURCE LINES 60-72
 
 .. code-block:: Python
 
@@ -132,14 +135,14 @@ The most common ones are **erosion** and **dilation**.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-74
+.. GENERATED FROM PYTHON SOURCE LINES 73-77
 
 The above operations were done using a single pixel, which means they used a matrix of size 1 (`[[1]]`).
 This matrix used for morphological operations is also called a "structuring element".
 We can also use a structuring element of a different size, such as a 3×3 matrix, for example.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-78
+.. GENERATED FROM PYTHON SOURCE LINES 77-81
 
 .. code-block:: Python
 
@@ -162,13 +165,13 @@ We can also use a structuring element of a different size, such as a 3×3 matrix
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 79-82
+.. GENERATED FROM PYTHON SOURCE LINES 82-85
 
 Now, let's apply erosion using this **3×3 structuring element** and
 compare the results.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-93
+.. GENERATED FROM PYTHON SOURCE LINES 85-96
 
 .. code-block:: Python
 
@@ -195,12 +198,12 @@ compare the results.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-96
+.. GENERATED FROM PYTHON SOURCE LINES 97-99
 
 We can also use structuring element of different shapes
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 96-112
+.. GENERATED FROM PYTHON SOURCE LINES 99-115
 
 .. code-block:: Python
 
@@ -232,12 +235,12 @@ We can also use structuring element of different shapes
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 113-115
+.. GENERATED FROM PYTHON SOURCE LINES 116-118
 
 Let's apply erosion on the binary image of our blobs image.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 115-149
+.. GENERATED FROM PYTHON SOURCE LINES 118-152
 
 .. code-block:: Python
 
@@ -257,7 +260,7 @@ Let's apply erosion on the binary image of our blobs image.
 
     fig, axes = plt.subplots(1, 5, figsize=(15,3))
     plt.suptitle("Erosion with Square structuring element")
-    display_image(axes[0], blobs_bin, f"Binary Image")
+    display_image(axes[0], blobs_bin, "Binary Image")
     for i, size in enumerate([3, 5, 7, 9]):
         eroded_img = binary_erosion(blobs_bin, np.ones((size, size)))
         display_image(axes[i+1], eroded_img, f"Square ({size}×{size})")
@@ -268,7 +271,7 @@ Let's apply erosion on the binary image of our blobs image.
 
     fig, axes = plt.subplots(1, 5, figsize=(15,3))
     plt.suptitle("Erosion with Disk structuring element")
-    display_image(axes[0], blobs_bin, f"Binary Image")
+    display_image(axes[0], blobs_bin, "Binary Image")
     for i, radius in enumerate([1, 2, 3, 4]):
         eroded_img = binary_erosion(blobs_bin, disk(radius))  # Apply erosion
         display_image(axes[i+1], eroded_img, f"disk (r={radius})")
@@ -299,24 +302,31 @@ Let's apply erosion on the binary image of our blobs image.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 150-153
+.. GENERATED FROM PYTHON SOURCE LINES 153-162
 
 .. hint::
   Can you think of any useful applications of erosion, dilation, or the combination of both?
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 155-163
+.. seealso::
+
+  - `Opening <https://en.wikipedia.org/wiki/Opening_(morphology)>`_: erosion followed by dilation.
+  - `Closing <https://en.wikipedia.org/wiki/Closing_(morphology)>`_: dilation followed by erosion.
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 164-173
 
 Logical Operations
 ==================
 You may have heard about logical operations like **OR** and **AND**:
+
 - **True AND False** results in **False**.
 - **True OR False** results in **True**.
 
 Since binary images contain only binary values (0 and 1), we can apply these logical operations to them.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 163-178
+.. GENERATED FROM PYTHON SOURCE LINES 173-188
 
 .. code-block:: Python
 
@@ -347,12 +357,13 @@ Since binary images contain only binary values (0 and 1), we can apply these log
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 179-193
+.. GENERATED FROM PYTHON SOURCE LINES 189-203
 
 So essentially, logical operations on binary images work like this:
-- **AND (`&`)** keeps only the overlapping regions.
+
 - **OR (`|`)** merges both binary images.
 - **XOR (`^`)** keeps only the non-overlapping areas.
+- **AND (`&`)** keeps only the overlapping regions.
 - **NOT (`~`)** inverts the image.
 
 .. note::
@@ -360,11 +371,10 @@ So essentially, logical operations on binary images work like this:
   The operators we used so far (`|`, `^`, `&`, `~`) are called **bitwise operators**.
   These work correctly for boolean values (`True`, `False`).
   When using integers (`0`, `1`), the result may not be as expected.
-  In such cases, it is better to use `numpy.logical` operations:
-  `numpy.logical_and`, `numpy.logical_or`, `numpy.logical_xor`, `numpy.logical_not`.
+  In such cases, it is better to use `numpy.logical <https://numpy.org/doc/2.1/reference/routines.logic.html#logical-operations>`_ operations.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 193-198
+.. GENERATED FROM PYTHON SOURCE LINES 203-208
 
 .. code-block:: Python
 
@@ -388,12 +398,12 @@ So essentially, logical operations on binary images work like this:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 199-201
+.. GENERATED FROM PYTHON SOURCE LINES 209-211
 
 Let's apply logical operations to the binary image of the blobs and its eroded version.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 201-214
+.. GENERATED FROM PYTHON SOURCE LINES 211-224
 
 .. code-block:: Python
 
@@ -422,18 +432,22 @@ Let's apply logical operations to the binary image of the blobs and its eroded v
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 215-220
+.. GENERATED FROM PYTHON SOURCE LINES 225-234
 
 We can see that applying **erosion** followed by the **XOR** operation gives us the boundary of the object.
 
 .. hint::
   Can you think of any combination of morphological operations and logical operations that might be useful?
 
+.. seealso::
+
+  - **Subtract (A - B)**: The name explains itself, and is similar to **XOR (A ^ B)** when A >= B.
+  - **Add (A + B)**: Equivalent to **OR (A | B)**.
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.688 seconds)
+   **Total running time of the script:** (0 minutes 1.661 seconds)
 
 
 .. _sphx_glr_download_auto_examples_06_binary_operations.py:

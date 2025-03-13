@@ -111,6 +111,23 @@ Topics covered to understand basic image processing
     </div>
 
 
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Arguably (because this is my personal opinion) the most common application of binary image is to extract information.">
+
+.. only:: html
+
+  .. image:: /auto_examples/images/thumb/sphx_glr_08_extracting_information_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_08_extracting_information.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Extracting Information (Masking)</div>
+    </div>
+
+
 .. thumbnail-parent-div-close
 
 .. raw:: html
@@ -127,6 +144,7 @@ Topics covered to understand basic image processing
    /auto_examples/04_thresholding
    /auto_examples/05_binary_image
    /auto_examples/06_binary_operations
+   /auto_examples/08_extracting_information
 
 
 .. only:: html

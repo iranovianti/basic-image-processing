@@ -26,6 +26,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Extracting Information (Masking)" href="08_extracting_information.html" />
     <link rel="prev" title="Binary Image" href="05_binary_image.html" /> 
 </head>
 
@@ -56,13 +57,14 @@
 <li class="toctree-l1"><a class="reference internal" href="04_thresholding.html">Thresholding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_binary_image.html">Binary Image</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">BINARY IMAGE</span></p>
+<p class="caption" role="heading"><span class="caption-text">BINARY IMAGE PROCESSING</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Binary Image Operations</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#morphological-operations">Morphological Operations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#logical-operations">Logical Operations</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="08_extracting_information.html">Extracting Information (Masking)</a></li>
 </ul>
 
         </div>
@@ -139,7 +141,9 @@ option that lets you put a pixel value on top of each pixel.</p>
 <img src="../_images/sphx_glr_06_binary_operations_001.png" srcset="../_images/sphx_glr_06_binary_operations_001.png" alt="Binary Image, with Pixel Values" class = "sphx-glr-single-img"/><section id="morphological-operations">
 <h2>Morphological Operations<a class="headerlink" href="#morphological-operations" title="Link to this heading"></a></h2>
 <p>Morphological operations are used to change the shape (or morphology) of a binary object.
-The most common ones are <strong>erosion</strong> and <strong>dilation</strong>.</p>
+The most common ones are <a class="reference external" href="https://en.wikipedia.org/wiki/Erosion_(morphology)">erosion</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Dilation_(morphology)">dilation</a>.</p>
+<p>As the name suggests, <strong>erosion</strong> erode a binary object by removing pixels from its outer boundary.
+Conversely, <strong>dilation</strong> dilates the object by adding pixels to its outer area.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">dilated</span> <span class="o">=</span> <span class="n">binary_dilation</span><span class="p">(</span><span class="n">binary_image</span><span class="p">)</span>
 <span class="n">eroded</span> <span class="o">=</span> <span class="n">binary_erosion</span><span class="p">(</span><span class="n">binary_image</span><span class="p">)</span>
 
@@ -209,7 +213,7 @@ compare the results.</p>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Erosion with Square structuring element&quot;</span><span class="p">)</span>
-<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">blobs_bin</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Binary Image&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">blobs_bin</span><span class="p">,</span> <span class="s2">&quot;Binary Image&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">size</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]):</span>
     <span class="n">eroded_img</span> <span class="o">=</span> <span class="n">binary_erosion</span><span class="p">(</span><span class="n">blobs_bin</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">)))</span>
     <span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">eroded_img</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Square (</span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">×</span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
@@ -220,7 +224,7 @@ compare the results.</p>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Erosion with Disk structuring element&quot;</span><span class="p">)</span>
-<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">blobs_bin</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Binary Image&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">blobs_bin</span><span class="p">,</span> <span class="s2">&quot;Binary Image&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">radius</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]):</span>
     <span class="n">eroded_img</span> <span class="o">=</span> <span class="n">binary_erosion</span><span class="p">(</span><span class="n">blobs_bin</span><span class="p">,</span> <span class="n">disk</span><span class="p">(</span><span class="n">radius</span><span class="p">))</span>  <span class="c1"># Apply erosion</span>
     <span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">eroded_img</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;disk (r=</span><span class="si">{</span><span class="n">radius</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
@@ -236,12 +240,21 @@ compare the results.</p>
 <p class="admonition-title">Hint</p>
 <p>Can you think of any useful applications of erosion, dilation, or the combination of both?</p>
 </div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Opening_(morphology)">Opening</a>: erosion followed by dilation.</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Closing_(morphology)">Closing</a>: dilation followed by erosion.</p></li>
+</ul>
+</div>
 </section>
 <section id="logical-operations">
 <h2>Logical Operations<a class="headerlink" href="#logical-operations" title="Link to this heading"></a></h2>
-<p>You may have heard about logical operations like <strong>OR</strong> and <strong>AND</strong>:
-- <strong>True AND False</strong> results in <strong>False</strong>.
-- <strong>True OR False</strong> results in <strong>True</strong>.</p>
+<p>You may have heard about logical operations like <strong>OR</strong> and <strong>AND</strong>:</p>
+<ul class="simple">
+<li><p><strong>True AND False</strong> results in <strong>False</strong>.</p></li>
+<li><p><strong>True OR False</strong> results in <strong>True</strong>.</p></li>
+</ul>
 <p>Since binary images contain only binary values (0 and 1), we can apply these logical operations to them.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert the binary image to boolean</span>
 <span class="n">binary_image</span> <span class="o">=</span> <span class="n">binary_image</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
@@ -258,19 +271,20 @@ compare the results.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../_images/sphx_glr_06_binary_operations_007.png" srcset="../_images/sphx_glr_06_binary_operations_007.png" alt="Binary Image (A), Eroded (B), A | B (OR), A ^ B (XOR), A & B (AND), ~A (NOT)" class = "sphx-glr-single-img"/><p>So essentially, logical operations on binary images work like this:
-- <strong>AND (`&amp;`)</strong> keeps only the overlapping regions.
-- <strong>OR (`|`)</strong> merges both binary images.
-- <strong>XOR (`^`)</strong> keeps only the non-overlapping areas.
-- <strong>NOT (`~`)</strong> inverts the image.</p>
+<img src="../_images/sphx_glr_06_binary_operations_007.png" srcset="../_images/sphx_glr_06_binary_operations_007.png" alt="Binary Image (A), Eroded (B), A | B (OR), A ^ B (XOR), A & B (AND), ~A (NOT)" class = "sphx-glr-single-img"/><p>So essentially, logical operations on binary images work like this:</p>
+<ul class="simple">
+<li><p><strong>OR (`|`)</strong> merges both binary images.</p></li>
+<li><p><strong>XOR (`^`)</strong> keeps only the non-overlapping areas.</p></li>
+<li><p><strong>AND (`&amp;`)</strong> keeps only the overlapping regions.</p></li>
+<li><p><strong>NOT (`~`)</strong> inverts the image.</p></li>
+</ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>There are different ways to perform logical operations on a binary image.
 The operators we used so far (<cite>|</cite>, <cite>^</cite>, <cite>&amp;</cite>, <cite>~</cite>) are called <strong>bitwise operators</strong>.
 These work correctly for boolean values (<cite>True</cite>, <cite>False</cite>).
 When using integers (<cite>0</cite>, <cite>1</cite>), the result may not be as expected.
-In such cases, it is better to use <cite>numpy.logical</cite> operations:
-<cite>numpy.logical_and</cite>, <cite>numpy.logical_or</cite>, <cite>numpy.logical_xor</cite>, <cite>numpy.logical_not</cite>.</p>
+In such cases, it is better to use <a class="reference external" href="https://numpy.org/doc/2.1/reference/routines.logic.html#logical-operations">numpy.logical</a> operations.</p>
 </div>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]))</span>
 <span class="nb">print</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
@@ -301,7 +315,14 @@ In such cases, it is better to use <cite>numpy.logical</cite> operations:
 <p class="admonition-title">Hint</p>
 <p>Can you think of any combination of morphological operations and logical operations that might be useful?</p>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.688 seconds)</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><strong>Subtract (A - B)</strong>: The name explains itself, and is similar to <strong>XOR (A ^ B)</strong> when A &gt;= B.</p></li>
+<li><p><strong>Add (A + B)</strong>: Equivalent to <strong>OR (A | B)</strong>.</p></li>
+</ul>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.661 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-06-binary-operations-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/62482f7fa6901b783c8de48c55528250/06_binary_operations.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">06_binary_operations.ipynb</span></code></a></p>
@@ -322,12 +343,13 @@ In such cases, it is better to use <cite>numpy.logical</cite> operations:
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="05_binary_image.html" class="btn btn-neutral float-left" title="Binary Image" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="08_extracting_information.html" class="btn btn-neutral float-right" title="Extracting Information (Masking)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Ira Novianti.</p>
+    <p>&#169; Copyright 2024-2025, Ira Novianti.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

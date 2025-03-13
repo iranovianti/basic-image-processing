@@ -52,7 +52,10 @@ plt.show()
 # Morphological Operations
 # ========================
 # Morphological operations are used to change the shape (or morphology) of a binary object.
-# The most common ones are **erosion** and **dilation**.
+# The most common ones are `erosion <https://en.wikipedia.org/wiki/Erosion_(morphology)>`_ and `dilation <https://en.wikipedia.org/wiki/Dilation_(morphology)>`_.
+#
+# As the name suggests, **erosion** erode a binary object by removing pixels from its outer boundary.
+# Conversely, **dilation** dilates the object by adding pixels to its outer area.
 #
 
 dilated = binary_dilation(binary_image)
@@ -128,7 +131,7 @@ blobs_bin = blobs > 180
 
 fig, axes = plt.subplots(1, 5, figsize=(15,3))
 plt.suptitle("Erosion with Square structuring element")
-display_image(axes[0], blobs_bin, f"Binary Image")
+display_image(axes[0], blobs_bin, "Binary Image")
 for i, size in enumerate([3, 5, 7, 9]):
     eroded_img = binary_erosion(blobs_bin, np.ones((size, size)))
     display_image(axes[i+1], eroded_img, f"Square ({size}×{size})")
@@ -139,7 +142,7 @@ plt.show()
 
 fig, axes = plt.subplots(1, 5, figsize=(15,3))
 plt.suptitle("Erosion with Disk structuring element")
-display_image(axes[0], blobs_bin, f"Binary Image")
+display_image(axes[0], blobs_bin, "Binary Image")
 for i, radius in enumerate([1, 2, 3, 4]):
     eroded_img = binary_erosion(blobs_bin, disk(radius))  # Apply erosion
     display_image(axes[i+1], eroded_img, f"disk (r={radius})")
@@ -150,11 +153,18 @@ plt.show()
 # .. hint::
 #   Can you think of any useful applications of erosion, dilation, or the combination of both?
 #
+#
+# .. seealso::
+#   
+#   - `Opening <https://en.wikipedia.org/wiki/Opening_(morphology)>`_: erosion followed by dilation.
+#   - `Closing <https://en.wikipedia.org/wiki/Closing_(morphology)>`_: dilation followed by erosion.
+#
 
 ######################################################################
 # Logical Operations
 # ==================
 # You may have heard about logical operations like **OR** and **AND**:
+#
 # - **True AND False** results in **False**.
 # - **True OR False** results in **True**.
 #
@@ -177,9 +187,10 @@ plt.show()
 
 ######################################################################
 # So essentially, logical operations on binary images work like this:
-# - **AND (`&`)** keeps only the overlapping regions.
+#
 # - **OR (`|`)** merges both binary images.
 # - **XOR (`^`)** keeps only the non-overlapping areas.
+# - **AND (`&`)** keeps only the overlapping regions.
 # - **NOT (`~`)** inverts the image.
 #
 # .. note::
@@ -187,8 +198,7 @@ plt.show()
 #   The operators we used so far (`|`, `^`, `&`, `~`) are called **bitwise operators**.
 #   These work correctly for boolean values (`True`, `False`).
 #   When using integers (`0`, `1`), the result may not be as expected.
-#   In such cases, it is better to use `numpy.logical` operations:
-#   `numpy.logical_and`, `numpy.logical_or`, `numpy.logical_xor`, `numpy.logical_not`.
+#   In such cases, it is better to use `numpy.logical <https://numpy.org/doc/2.1/reference/routines.logic.html#logical-operations>`_ operations.
 #
 
 print(~np.array([False, True, True, False]))
@@ -216,4 +226,9 @@ plt.show()
 # 
 # .. hint::
 #   Can you think of any combination of morphological operations and logical operations that might be useful?
+#
+# .. seealso::
+#   
+#   - **Subtract (A - B)**: The name explains itself, and is similar to **XOR (A ^ B)** when A >= B.
+#   - **Add (A + B)**: Equivalent to **OR (A | B)**.
 #

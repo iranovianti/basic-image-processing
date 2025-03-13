@@ -16,6 +16,7 @@ Basic Image Processing tutorials
 
 .. toctree::
    :maxdepth: 1
-   :caption: BINARY IMAGE
+   :caption: BINARY IMAGE PROCESSING
 
    auto_examples/06_binary_operations
+   auto_examples/08_extracting_information

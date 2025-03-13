@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:01.688** total execution time for 6 files **from auto_examples**:
+**00:01.204** total execution time for 7 files **from auto_examples**:
 
 .. container::
 
@@ -32,8 +32,8 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
-   * - :ref:`sphx_glr_auto_examples_06_binary_operations.py` (``06_binary_operations.py``)
-     - 00:01.688
+   * - :ref:`sphx_glr_auto_examples_08_extracting_information.py` (``08_extracting_information.py``)
+     - 00:01.204
      - 0.0
    * - :ref:`sphx_glr_auto_examples_01_image_basics.py` (``01_image_basics.py``)
      - 00:00.000
@@ -48,5 +48,8 @@ Computation times
      - 00:00.000
      - 0.0
    * - :ref:`sphx_glr_auto_examples_05_binary_image.py` (``05_binary_image.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_06_binary_operations.py` (``06_binary_operations.py``)
      - 00:00.000
      - 0.0
