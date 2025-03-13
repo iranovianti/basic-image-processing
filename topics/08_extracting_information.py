@@ -3,11 +3,14 @@
 Extracting Information (Masking)
 ================================
 
-Arguably (because this is my personal opinion) the most common application of binary image
+Arguably (because this is my personal opinion), the most common application of binary image
 is to extract information.
 
-In this context, the binary image is also usually called a *binary mask*,
-because we use it to *mask* or filter the information. This is also called Image masking.
+Basic Concept
+=============
+
+In this context, a binary image is often referred to as a *binary mask* because it is used to *mask*
+or filter specific regions of interest. This process is known as image masking.
 
 To demonstrate how this works, will use 8x8 grayscale and binary images.
 """
@@ -61,8 +64,8 @@ plt.tight_layout()
 plt.show()
 
 ######################################################################
-# So essentially, we do this when we only want the value of the location
-# of the binary mask.
+# Essentially, we use a binary mask when we want to extract values only
+# from the areas it defines.
 #
 # In python, using numpy this can simply be done by `boolean indexing <https://numpy.org/doc/2.2/user/basics.indexing.html#boolean-array-indexing>`_.
 #
@@ -76,13 +79,15 @@ print(masked_value)
 # Practical example
 # =================
 #
-# To see this in action, we're gonna use images of protein translocation
+# To see this in action, we'll use use images of protein translocation
 # described in `this paper <https://www.nature.com/articles/s41589-024-01654-w>`_
-# from our lab.
+# from our lab. The images were kindly provided by the corresponding author.
 #
-# In the paper in figure 2c, it shows the protein translocation from cytosol
-# to nucleus. The images are from two channels, protein of interest (POI)
-# and nucleus channel.
+# Context and Objective
+# ---------------------
+# These fluorescence images capture the translocation of a protein of interest (POI)
+# from the cytosol to the nucleus. The dataset consists of two channels: one for
+# the POI and one for the nucleus. Let’s apply information extraction to visualize this process.
 #
 
 from tifffile import imread
@@ -95,6 +100,8 @@ print(POI_ch.shape, nucleus_ch.shape)
 # We have 71 frames of 150×185 images
 
 ######################################################################
+# Extracting Fluorescence from Nucleus
+# ------------------------------------
 # Let's say we want to know how much POI is located in the nucleus at
 # each time point.
 #
@@ -130,6 +137,8 @@ print(f"average fluorescence intensity of POI in nucleus: {POI_fl_1.mean()}")
 print(f"average fluorescence intensity of nucleus protein: {nucleus_fl_1.mean()}")
 
 ######################################################################
+# Tracking Fluorescence Changes in Nucleus
+# ----------------------------------------
 # Let's put it together into one function so we can apply the process
 # (thresholding to get the mask -> extract fluorescence intensity) into
 # all the frames.
@@ -166,6 +175,8 @@ ax.legend()
 plt.show()
 
 ######################################################################
+# Creating Cytosol Mask
+# ---------------------
 # Okay, so now we can see the translocation of POI to and from nucleus.
 # But how do we know that it's from cytosol?
 # 
@@ -211,6 +222,8 @@ plt.show()
 # The cytosol(ish) mask also includes a little area outside of the cell,
 # but overall, it looks pretty good!
 #
+# Comparing Nucleus and Cytosol Fluorescence
+# ------------------------------------------
 # Let's apply this to all frames and compare it to the fluorescence intensity
 # in the nucleus.
 #
