@@ -22,15 +22,18 @@
 Extracting Information (Masking)
 ================================
 
-Arguably (because this is my personal opinion) the most common application of binary image
+Arguably (because this is my personal opinion), the most common application of binary image
 is to extract information.
 
-In this context, the binary image is also usually called a *binary mask*,
-because we use it to *mask* or filter the information. This is also called Image masking.
+Basic Concept
+=============
+
+In this context, a binary image is often referred to as a *binary mask* because it is used to *mask*
+or filter specific regions of interest. This process is known as image masking.
 
 To demonstrate how this works, will use 8x8 grayscale and binary images.
 
-.. GENERATED FROM PYTHON SOURCE LINES 14-63
+.. GENERATED FROM PYTHON SOURCE LINES 17-66
 
 .. code-block:: Python
 
@@ -95,15 +98,15 @@ To demonstrate how this works, will use 8x8 grayscale and binary images.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 64-69
+.. GENERATED FROM PYTHON SOURCE LINES 67-72
 
-So essentially, we do this when we only want the value of the location
-of the binary mask.
+Essentially, we use a binary mask when we want to extract values only
+from the areas it defines.
 
 In python, using numpy this can simply be done by `boolean indexing <https://numpy.org/doc/2.2/user/basics.indexing.html#boolean-array-indexing>`_.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-75
+.. GENERATED FROM PYTHON SOURCE LINES 72-78
 
 .. code-block:: Python
 
@@ -127,21 +130,23 @@ In python, using numpy this can simply be done by `boolean indexing <https://num
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-87
+.. GENERATED FROM PYTHON SOURCE LINES 79-92
 
 Practical example
 =================
 
-To see this in action, we're gonna use images of protein translocation
+To see this in action, we'll use use images of protein translocation
 described in `this paper <https://www.nature.com/articles/s41589-024-01654-w>`_
-from our lab.
+from our lab. The images were kindly provided by the corresponding author.
 
-In the paper in figure 2c, it shows the protein translocation from cytosol
-to nucleus. The images are from two channels, protein of interest (POI)
-and nucleus channel.
+Context and Objective
+---------------------
+These fluorescence images capture the translocation of a protein of interest (POI)
+from the cytosol to the nucleus. The dataset consists of two channels: one for
+the POI and one for the nucleus. Let’s apply information extraction to visualize this process.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 87-97
+.. GENERATED FROM PYTHON SOURCE LINES 92-102
 
 .. code-block:: Python
 
@@ -168,8 +173,10 @@ and nucleus channel.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 98-107
+.. GENERATED FROM PYTHON SOURCE LINES 103-114
 
+Extracting Fluorescence from Nucleus
+------------------------------------
 Let's say we want to know how much POI is located in the nucleus at
 each time point.
 
@@ -180,7 +187,7 @@ using this mask.
 To demonstrate this, we can use the images from the first frame.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 107-132
+.. GENERATED FROM PYTHON SOURCE LINES 114-139
 
 .. code-block:: Python
 
@@ -228,14 +235,16 @@ To demonstrate this, we can use the images from the first frame.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 133-137
+.. GENERATED FROM PYTHON SOURCE LINES 140-146
 
+Tracking Fluorescence Changes in Nucleus
+----------------------------------------
 Let's put it together into one function so we can apply the process
 (thresholding to get the mask -> extract fluorescence intensity) into
 all the frames.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 137-168
+.. GENERATED FROM PYTHON SOURCE LINES 146-177
 
 .. code-block:: Python
 
@@ -282,8 +291,10 @@ all the frames.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 169-178
+.. GENERATED FROM PYTHON SOURCE LINES 178-189
 
+Creating Cytosol Mask
+---------------------
 Okay, so now we can see the translocation of POI to and from nucleus.
 But how do we know that it's from cytosol?
 
@@ -294,7 +305,7 @@ One creative way to do that is by expanding the nucleus mask. Because
 we know that the cytosol surrounds the nucleus.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 178-196
+.. GENERATED FROM PYTHON SOURCE LINES 189-207
 
 .. code-block:: Python
 
@@ -328,7 +339,7 @@ we know that the cytosol surrounds the nucleus.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 197-202
+.. GENERATED FROM PYTHON SOURCE LINES 208-213
 
 Neat, huh?!
 This is actually an approach I followed from `this paper <https://www.nature.com/articles/s41586-024-07950-8>`_.
@@ -336,7 +347,7 @@ This is actually an approach I followed from `this paper <https://www.nature.com
 Now, let's see if this can be used in our case
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 202-210
+.. GENERATED FROM PYTHON SOURCE LINES 213-221
 
 .. code-block:: Python
 
@@ -360,16 +371,18 @@ Now, let's see if this can be used in our case
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 211-217
+.. GENERATED FROM PYTHON SOURCE LINES 222-230
 
 The cytosol(ish) mask also includes a little area outside of the cell,
 but overall, it looks pretty good!
 
+Comparing Nucleus and Cytosol Fluorescence
+------------------------------------------
 Let's apply this to all frames and compare it to the fluorescence intensity
 in the nucleus.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 217-247
+.. GENERATED FROM PYTHON SOURCE LINES 230-260
 
 .. code-block:: Python
 
@@ -415,7 +428,7 @@ in the nucleus.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 248-259
+.. GENERATED FROM PYTHON SOURCE LINES 261-272
 
 We can clearly see that as the intensity of POI in the nucleus increases,
 the intensity in the cytosol decreases. Likewise, when the POI intensity
@@ -432,7 +445,7 @@ that POI translocates between the nucleus and cytosol.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.294 seconds)
+   **Total running time of the script:** (0 minutes 1.312 seconds)
 
 
 .. _sphx_glr_download_auto_examples_08_extracting_information.py:

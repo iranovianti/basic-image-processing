@@ -113,7 +113,7 @@ Topics covered to understand basic image processing
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Arguably (because this is my personal opinion) the most common application of binary image is to extract information.">
+    <div class="sphx-glr-thumbcontainer" tooltip="Arguably (because this is my personal opinion), the most common application of binary image is to extract information.">
 
 .. only:: html
 

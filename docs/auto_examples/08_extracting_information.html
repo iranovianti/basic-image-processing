@@ -60,7 +60,15 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="06_binary_operations.html">Binary Image Operations</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Extracting Information (Masking)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#practical-example">Practical example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-concept">Basic Concept</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#practical-example">Practical example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#context-and-objective">Context and Objective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extracting-fluorescence-from-nucleus">Extracting Fluorescence from Nucleus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tracking-fluorescence-changes-in-nucleus">Tracking Fluorescence Changes in Nucleus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-cytosol-mask">Creating Cytosol Mask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comparing-nucleus-and-cytosol-fluorescence">Comparing Nucleus and Cytosol Fluorescence</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -96,10 +104,12 @@ to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="extracting-information-masking">
 <span id="sphx-glr-auto-examples-08-extracting-information-py"></span><h1>Extracting Information (Masking)<a class="headerlink" href="#extracting-information-masking" title="Link to this heading"></a></h1>
-<p>Arguably (because this is my personal opinion) the most common application of binary image
+<p>Arguably (because this is my personal opinion), the most common application of binary image
 is to extract information.</p>
-<p>In this context, the binary image is also usually called a <em>binary mask</em>,
-because we use it to <em>mask</em> or filter the information. This is also called Image masking.</p>
+<section id="basic-concept">
+<h2>Basic Concept<a class="headerlink" href="#basic-concept" title="Link to this heading"></a></h2>
+<p>In this context, a binary image is often referred to as a <em>binary mask</em> because it is used to <em>mask</em>
+or filter specific regions of interest. This process is known as image masking.</p>
 <p>To demonstrate how this works, will use 8x8 grayscale and binary images.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -151,8 +161,8 @@ because we use it to <em>mask</em> or filter the information. This is also calle
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../_images/sphx_glr_08_extracting_information_001.png" srcset="../_images/sphx_glr_08_extracting_information_001.png" alt="Grayscale Image, Binary mask, Masked Image" class = "sphx-glr-single-img"/><p>So essentially, we do this when we only want the value of the location
-of the binary mask.</p>
+<img src="../_images/sphx_glr_08_extracting_information_001.png" srcset="../_images/sphx_glr_08_extracting_information_001.png" alt="Grayscale Image, Binary mask, Masked Image" class = "sphx-glr-single-img"/><p>Essentially, we use a binary mask when we want to extract values only
+from the areas it defines.</p>
 <p>In python, using numpy this can simply be done by <a class="reference external" href="https://numpy.org/doc/2.2/user/basics.indexing.html#boolean-array-indexing">boolean indexing</a>.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract the value by indexing</span>
 <span class="n">masked_value</span> <span class="o">=</span> <span class="n">grayscale_image</span><span class="p">[</span><span class="n">binary_image</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)]</span>
@@ -164,14 +174,17 @@ of the binary mask.</p>
  0.2 0.6 0.7 0.4 0.2 0.3]
 </pre></div>
 </div>
+</section>
 <section id="practical-example">
 <h2>Practical example<a class="headerlink" href="#practical-example" title="Link to this heading"></a></h2>
-<p>To see this in action, we’re gonna use images of protein translocation
+<p>To see this in action, we’ll use use images of protein translocation
 described in <a class="reference external" href="https://www.nature.com/articles/s41589-024-01654-w">this paper</a>
-from our lab.</p>
-<p>In the paper in figure 2c, it shows the protein translocation from cytosol
-to nucleus. The images are from two channels, protein of interest (POI)
-and nucleus channel.</p>
+from our lab. The images were kindly provided by the corresponding author.</p>
+<section id="context-and-objective">
+<h3>Context and Objective<a class="headerlink" href="#context-and-objective" title="Link to this heading"></a></h3>
+<p>These fluorescence images capture the translocation of a protein of interest (POI)
+from the cytosol to the nucleus. The dataset consists of two channels: one for
+the POI and one for the nucleus. Let’s apply information extraction to visualize this process.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tifffile</span> <span class="kn">import</span> <span class="n">imread</span>
 <span class="kn">from</span> <span class="nn">skimage.filters</span> <span class="kn">import</span> <span class="n">threshold_otsu</span>
 
@@ -185,6 +198,9 @@ and nucleus channel.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>(71, 150, 185) (71, 150, 185)
 </pre></div>
 </div>
+</section>
+<section id="extracting-fluorescence-from-nucleus">
+<h3>Extracting Fluorescence from Nucleus<a class="headerlink" href="#extracting-fluorescence-from-nucleus" title="Link to this heading"></a></h3>
 <p>Let’s say we want to know how much POI is located in the nucleus at
 each time point.</p>
 <p>First, we can locate the nucleus by generating a binary mask from the
@@ -219,6 +235,9 @@ using this mask.</p>
 average fluorescence intensity of nucleus protein: 258.5612423447069
 </pre></div>
 </div>
+</section>
+<section id="tracking-fluorescence-changes-in-nucleus">
+<h3>Tracking Fluorescence Changes in Nucleus<a class="headerlink" href="#tracking-fluorescence-changes-in-nucleus" title="Link to this heading"></a></h3>
 <p>Let’s put it together into one function so we can apply the process
 (thresholding to get the mask -&gt; extract fluorescence intensity) into
 all the frames.</p>
@@ -253,7 +272,10 @@ all the frames.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../_images/sphx_glr_08_extracting_information_003.png" srcset="../_images/sphx_glr_08_extracting_information_003.png" alt="POI in nucleus over time" class = "sphx-glr-single-img"/><p>Okay, so now we can see the translocation of POI to and from nucleus.
+<img src="../_images/sphx_glr_08_extracting_information_003.png" srcset="../_images/sphx_glr_08_extracting_information_003.png" alt="POI in nucleus over time" class = "sphx-glr-single-img"/></section>
+<section id="creating-cytosol-mask">
+<h3>Creating Cytosol Mask<a class="headerlink" href="#creating-cytosol-mask" title="Link to this heading"></a></h3>
+<p>Okay, so now we can see the translocation of POI to and from nucleus.
 But how do we know that it’s from cytosol?</p>
 <p>Well, we can get the mean fluorescence intensity from the cytosol and
 see the correlation. But we don’t have a cytosol channel.</p>
@@ -290,6 +312,9 @@ This is actually an approach I followed from <a class="reference external" href=
 </div>
 <img src="../_images/sphx_glr_08_extracting_information_005.png" srcset="../_images/sphx_glr_08_extracting_information_005.png" alt="POI, POI in nucleus, POI around nucleus" class = "sphx-glr-single-img"/><p>The cytosol(ish) mask also includes a little area outside of the cell,
 but overall, it looks pretty good!</p>
+</section>
+<section id="comparing-nucleus-and-cytosol-fluorescence">
+<h3>Comparing Nucleus and Cytosol Fluorescence<a class="headerlink" href="#comparing-nucleus-and-cytosol-fluorescence" title="Link to this heading"></a></h3>
 <p>Let’s apply this to all frames and compare it to the fluorescence intensity
 in the nucleus.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Function to generate cytosol mask</span>
@@ -333,7 +358,7 @@ that POI translocates between the nucleus and cytosol.</p>
 calculating the fluorescence intensity.
 Why do you think that is?</p>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.294 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.312 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-08-extracting-information-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/358bf0231de7a110d1a8c1b25563881e/08_extracting_information.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">08_extracting_information.ipynb</span></code></a></p>
@@ -346,6 +371,7 @@ Why do you think that is?</p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
 </section>
 </section>
 
