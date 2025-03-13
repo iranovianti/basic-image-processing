@@ -197,8 +197,22 @@ plt.show()
 # Neat, huh?!
 # This is actually an approach I followed from `this paper <https://www.nature.com/articles/s41586-024-07950-8>`_.
 #
-# Now, let's see if this can be used in our case by comparing POI
-# intensity between nucleus and cytosol over time.
+# Now, let's see if this can be used in our case
+#
+
+fig, axes = plt.subplots(1, 3, figsize=(12, 4))
+display_image(axes[0], POI_1, "POI")
+display_image(axes[1], POI_1, "POI in nucleus", mask=nucleus_mask)
+display_image(axes[2], POI_1, "POI around nucleus", mask=cytosol_mask)
+plt.tight_layout()
+plt.show()
+
+######################################################################
+# The cytosol(ish) mask also includes a little area outside of the cell,
+# but overall, it looks pretty good!
+#
+# Let's apply this to all frames and compare it to the fluorescence intensity
+# in the nucleus.
 #
 
 # Function to generate cytosol mask

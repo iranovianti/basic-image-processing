@@ -279,8 +279,19 @@ we know that the cytosol surrounds the nucleus.</p>
 </div>
 <img src="../_images/sphx_glr_08_extracting_information_004.png" srcset="../_images/sphx_glr_08_extracting_information_004.png" alt="Nucleus Mask, Dilation 1 (A), Dilation 2 (B), Around Nucleus (A ^ B)" class = "sphx-glr-single-img"/><p>Neat, huh?!
 This is actually an approach I followed from <a class="reference external" href="https://www.nature.com/articles/s41586-024-07950-8">this paper</a>.</p>
-<p>Now, let’s see if this can be used in our case by comparing POI
-intensity between nucleus and cytosol over time.</p>
+<p>Now, let’s see if this can be used in our case</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">POI_1</span><span class="p">,</span> <span class="s2">&quot;POI&quot;</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">POI_1</span><span class="p">,</span> <span class="s2">&quot;POI in nucleus&quot;</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">nucleus_mask</span><span class="p">)</span>
+<span class="n">display_image</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">POI_1</span><span class="p">,</span> <span class="s2">&quot;POI around nucleus&quot;</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">cytosol_mask</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../_images/sphx_glr_08_extracting_information_005.png" srcset="../_images/sphx_glr_08_extracting_information_005.png" alt="POI, POI in nucleus, POI around nucleus" class = "sphx-glr-single-img"/><p>The cytosol(ish) mask also includes a little area outside of the cell,
+but overall, it looks pretty good!</p>
+<p>Let’s apply this to all frames and compare it to the fluorescence intensity
+in the nucleus.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Function to generate cytosol mask</span>
 <span class="k">def</span> <span class="nf">cytosol_mask_function</span><span class="p">(</span><span class="n">frame</span><span class="p">):</span>
     <span class="n">nucleus_mask</span> <span class="o">=</span> <span class="n">nucleus_mask_function</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
@@ -311,7 +322,7 @@ intensity between nucleus and cytosol over time.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../_images/sphx_glr_08_extracting_information_005.png" srcset="../_images/sphx_glr_08_extracting_information_005.png" alt="POI Fl. Intensity Over Time" class = "sphx-glr-single-img"/><p>We can clearly see that as the intensity of POI in the nucleus increases,
+<img src="../_images/sphx_glr_08_extracting_information_006.png" srcset="../_images/sphx_glr_08_extracting_information_006.png" alt="POI Fl. Intensity Over Time" class = "sphx-glr-single-img"/><p>We can clearly see that as the intensity of POI in the nucleus increases,
 the intensity in the cytosol decreases. Likewise, when the POI intensity
 in the nucleus decreases, it increases in the cytosol. This indicates
 that POI translocates between the nucleus and cytosol.</p>
@@ -322,7 +333,7 @@ that POI translocates between the nucleus and cytosol.</p>
 calculating the fluorescence intensity.
 Why do you think that is?</p>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.204 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.294 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-08-extracting-information-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/358bf0231de7a110d1a8c1b25563881e/08_extracting_information.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">08_extracting_information.ipynb</span></code></a></p>
